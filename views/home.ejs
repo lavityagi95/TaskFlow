@@ -5,88 +5,147 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TaskFlow | Smart Task Management</title>
 
-    <link rel="stylesheet" href="/css/home.css">
-
+    <!-- Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/home.css">
 </head>
 <body>
 
     <!-- Navbar -->
+    <%- include("./partials/navbar") %>
 
-    <nav>
-
-        <div class="logo">
-            TaskFlow
-        </div>
-
-        <ul>
-
-            <li><a href="/">Home</a></li>
-            <li><a href="#">Features</a></li>
-            <li><a href="#">Pricing</a></li>
-            <li><a href="#">Contact</a></li>
-
-        </ul>
-
-        <div class="buttons">
-
-            <a href="/login" class="login-btn">
-                Login
-            </a>
-
-            <a href="/company/register" class="register-btn">
-                Register Company
-            </a>
-
-        </div>
-
-    </nav>
-
-    <!-- Hero -->
-
+    <!-- Hero Section -->
     <section class="hero">
 
-        <div class="left">
+        <div class="container">
 
-            <span>🚀 Smart Task Management</span>
+            <div class="hero-content">
 
-            <h1>
-                Manage Your Company
-                Smarter Than Ever
-            </h1>
+                <span class="hero-tag">
+                    🚀 Smart Task Management
+                </span>
 
-            <p>
+                <h1>
+                    Manage Your Company <span>Smarter</span> Than Ever
+                </h1>
 
-                Assign tasks, track progress,
-                approve employees and manage
-                your whole company from one dashboard.
+                <p>
+                    TaskFlow helps companies assign tasks, track employee progress,
+                    approve employee requests, and manage projects from one powerful dashboard.
+                </p>
 
-            </p>
+                <div class="hero-buttons">
 
-            <div class="hero-buttons">
+                    <a href="/company/register" class="primary-btn">
+                        Register Company
+                    </a>
 
-                <a href="/company/register">
-                    Get Started
-                </a>
+                    <a href="/login" class="secondary-btn">
+                        Employee Login
+                    </a>
 
-                <a href="/login">
-                    Employee Login
-                </a>
+                </div>
+
+            </div>
+
+            <div class="hero-image">
+
+                <img src="/images/dashboard.jpg" alt="TaskFlow Dashboard">
 
             </div>
 
         </div>
 
-        <div class="right">
+    </section>
 
-            <img src="/images/dashboard.jpg" alt="Dashboard">
+    <!-- Features -->
+    <section class="features" id="features">
+
+        <div class="container">
+
+            <h2>Why Choose TaskFlow?</h2>
+
+            <div class="feature-cards">
+
+                <div class="card">
+                    <h3>📋 Task Assignment</h3>
+                    <p>Create tasks and assign them to employees in seconds.</p>
+                </div>
+
+                <div class="card">
+                    <h3>📈 Progress Tracking</h3>
+                    <p>Monitor task completion and employee performance in real time.</p>
+                </div>
+
+                <div class="card">
+                    <h3>👥 Employee Management</h3>
+                    <p>Approve employee requests and organize your workforce easily.</p>
+                </div>
+
+            </div>
 
         </div>
 
     </section>
+
+    <!-- How It Works -->
+    <section class="working" id="working">
+
+        <div class="container">
+
+            <h2>How It Works</h2>
+
+            <div class="steps">
+
+                <div class="step">
+                    <span>1</span>
+                    <h3>Register Your Company</h3>
+                    <p>Create your company account in just a few minutes.</p>
+                </div>
+
+                <div class="step">
+                    <span>2</span>
+                    <h3>Add Employees</h3>
+                    <p>Employees search for your company and send join requests.</p>
+                </div>
+
+                <div class="step">
+                    <span>3</span>
+                    <h3>Assign Tasks</h3>
+                    <p>Create tasks, assign them, and monitor their progress.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta">
+
+        <div class="container">
+
+            <h2>Start Managing Your Team Today</h2>
+
+            <p>
+                Simplify task management and improve team productivity with TaskFlow.
+            </p>
+
+            <a href="/company/register" class="primary-btn">
+                Get Started
+            </a>
+
+        </div>
+
+    </section>
+
+    <!-- Footer -->
+    <%- include("./partials/footer") %>
 
 </body>
 </html>
