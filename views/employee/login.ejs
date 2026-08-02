@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Company Login | TaskFlow</title>
+    <title>Employee Login | TaskFlow</title>
 
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/navbar.css">
@@ -18,17 +18,16 @@
 
         <div class="login-card">
 
-            <h1>Company Login</h1>
+            <h1>Employee Login</h1>
 
             <p>
-                Login to access your company dashboard.
+                Login to access your assigned tasks and update your progress.
             </p>
 
-            <form action="/company/login" method="POST">
+            <form action="/employee/login" method="POST">
 
                 <div class="form-group">
                     <label>Email Address</label>
-
                     <input
                         type="email"
                         name="email"
@@ -39,7 +38,6 @@
 
                 <div class="form-group">
                     <label>Password</label>
-
                     <input
                         type="password"
                         name="password"
@@ -48,26 +46,19 @@
                     >
                 </div>
 
-                <button
-                    type="submit"
-                    class="btn"
-                >
+                <button type="submit" class="btn">
                     Login
                 </button>
 
             </form>
 
             <div class="bottom-link">
-
                 <p>
-                    Don't have a company account?
-
-                    <a href="/company/register">
-                        Register Now
+                    Don't have an account?
+                    <a href="/employee/register">
+                        Send Join Request
                     </a>
-
                 </p>
-
             </div>
 
         </div>

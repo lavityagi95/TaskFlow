@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Employee Registration</title>
+
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/employeeRegister.css">
+    <link rel="stylesheet" href="/css/footer.css">
+
+</head>
+<body>
+
+<%- include("../partials/navbar") %>
+
+<section class="register-section">
+
+    <div class="register-card">
+
+        <h1>Join Your Company</h1>
+
+        <p>Submit your request to join your company.</p>
+
+        <form action="/employee/register" method="POST">
+
+            <div class="input-group">
+
+                <label>Company</label>
+
+                <select name="company_id" required>
+
+                    <option value="">Select Company</option>
+
+                    <% companies.forEach(company => { %>
+
+                        <option value="<%= company.id %>">
+
+                            <%= company.company_name %>
+
+                        </option>
+
+                    <% }) %>
+
+                </select>
+
+            </div>
+
+            <div class="input-group">
+
+                <label>Full Name</label>
+
+                <input
+                    type="text"
+                    name="employee_name"
+                    required
+                >
+
+            </div>
+
+            <div class="input-group">
+
+                <label>Email</label>
+
+                <input
+                    type="email"
+                    name="email"
+                    required
+                >
+
+            </div>
+
+            <div class="input-group">
+
+                <label>Password</label>
+
+                <input
+                    type="password"
+                    name="password"
+                    required
+                >
+
+            </div>
+
+            <div class="input-group">
+
+                <label>Designation</label>
+
+                <input
+                    type="text"
+                    name="designation"
+                    required
+                >
+
+            </div>
+
+            <button>
+
+                Send Join Request
+
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+<%- include("../partials/footer") %>
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title>Dashboard</title>
+
+    <link rel="stylesheet" href="/css/adminNavbar.css">
+    <link rel="stylesheet" href="/css/adminSidebar.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+
+</head>
+
+<body>
+
+<%- include("../partials/adminNavbar") %>
+
+<div class="dashboard">
+
+    <%- include("../partials/adminSidebar") %>
+
+    <main class="content">
+
+        <h1>
+            Welcome,
+            <%= company.company_name %>
+        </h1>
+
+        <div class="cards">
+
+            <div class="card">
+                Total Employees
+            </div>
+
+            <div class="card">
+                Pending Requests
+            </div>
+
+            <div class="card">
+                Total Tasks
+            </div>
+
+            <div class="card">
+                Completed Tasks
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Join Requests</title>
+
+</head>
+<body>
+
+<h1>Pending Join Requests</h1>
+
+<% if(requests.length === 0){ %>
+
+    <h3>No Pending Requests</h3>
+
+<% } else { %>
+
+    <% requests.forEach(request => { %>
+
+        <div style="border:1px solid #ccc;padding:20px;margin:20px;">
+
+            <h3><%= request.employee_name %></h3>
+
+            <p>Email: <%= request.email %></p>
+
+            <p>Designation: <%= request.designation %></p>
+
+            <form
+                action="/company/approve/<%= request.id %>"
+                method="POST"
+                style="display:inline;"
+            >
+
+                <button>
+                    Approve
+                </button>
+
+            </form>
+
+            <form
+                action="/company/reject/<%= request.id %>"
+                method="POST"
+                style="display:inline;"
+            >
+
+                <button>
+                    Reject
+                </button>
+
+            </form>
+
+        </div>
+
+    <% }) %>
+
+<% } %>
+
+</body>
+</html>
