@@ -1,0 +1,139 @@
+/* ===========================
+   CREATE TASK PAGE
+=========================== */
+
+.task-section {
+    min-height: calc(100vh - 160px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px;
+    background: linear-gradient(135deg, #eef4ff 0%, #f8fbff 100%);
+}
+
+.task-card {
+    width: 100%;
+    max-width: 700px;
+    background: #fff;
+    border-radius: 18px;
+    padding: 40px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+}
+
+.task-card h1 {
+    text-align: center;
+    color: #1e293b;
+    margin-bottom: 10px;
+    font-size: 2rem;
+}
+
+.task-card p {
+    text-align: center;
+    color: #64748b;
+    margin-bottom: 30px;
+}
+
+/* ===========================
+   FORM
+=========================== */
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #dbe4f0;
+    border-radius: 10px;
+    font-size: 15px;
+    outline: none;
+    transition: 0.3s;
+    font-family: inherit;
+    box-sizing: border-box;
+    background: #fff;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+}
+
+/* ===========================
+   BUTTON
+=========================== */
+
+.btn {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    background: #2563eb;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+@media (max-width: 768px) {
+
+    .task-section {
+        padding: 40px 15px;
+    }
+
+    .task-card {
+        padding: 30px 22px;
+    }
+
+    .task-card h1 {
+        font-size: 1.7rem;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    .task-card {
+        padding: 22px 18px;
+        border-radius: 14px;
+    }
+
+    .task-card h1 {
+        font-size: 1.5rem;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select,
+    .btn {
+        font-size: 14px;
+        padding: 13px;
+    }
+
+}

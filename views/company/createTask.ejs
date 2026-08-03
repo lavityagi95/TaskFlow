@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Task | TaskFlow</title>
+
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/task.css">
+    <link rel="stylesheet" href="/css/task.css">
+</head>
+<body>
+
+<%- include("../partials/navbar") %>
+
+<section class="task-section">
+
+    <div class="task-card">
+
+        <h1>Create Task</h1>
+
+        <form action="/company/create-task" method="POST">
+
+            <div class="form-group">
+                <label>Task Title</label>
+                <input
+                    type="text"
+                    name="title"
+                    placeholder="Enter task title"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label>Description</label>
+
+                <textarea
+                    name="description"
+                    rows="5"
+                    placeholder="Task description"
+                ></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Assign Employee</label>
+
+                <select name="employee_id" required>
+
+                    <option value="">Select Employee</option>
+
+                    <% employees.forEach(employee => { %>
+
+                        <option value="<%= employee.id %>">
+                            <%= employee.full_name %>
+                        </option>
+
+                    <% }) %>
+
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Priority</label>
+
+                <select name="priority">
+
+                    <option>Low</option>
+                    <option selected>Medium</option>
+                    <option>High</option>
+
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Due Date</label>
+
+                <input
+                    type="date"
+                    name="due_date"
+                >
+
+            </div>
+
+            <button class="btn">
+                Create Task
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+<%- include("../partials/footer") %>
+
+</body>
+</html>

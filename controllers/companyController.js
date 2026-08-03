@@ -106,9 +106,7 @@ const dashboardPage = (req, res) => {
 
 };
 
-// ===============================
 // Show Pending Join Requests
-// ===============================
 const joinRequestsPage = async (req, res) => {
     try {
 
@@ -214,7 +212,29 @@ const rejectEmployee = async (req, res) => {
 // ===============================
 const createTaskPage = async (req, res) => {
 
-    res.send("Create Task Page");
+    try {
+
+        const companyId = req.session.company.id;
+
+        const [employees] = await db.query(
+            `SELECT id, full_name
+             FROM employees
+             WHERE company_id = ?
+             ORDER BY full_name`,
+            [companyId]
+        );
+
+        res.render("company/createTask", {
+            company: req.session.company,
+            employees
+        });
+
+    } catch (err) {
+
+        console.error(err);
+        res.status(500).send("Database Error");
+
+    }
 
 };
 
@@ -223,10 +243,55 @@ const createTaskPage = async (req, res) => {
 // ===============================
 const createTask = async (req, res) => {
 
-    res.send("Task Created");
+    try {
+
+        const companyId = req.session.company.id;
+
+        const {
+            employee_id,
+            title,
+            description,
+            priority,
+            due_date
+        } = req.body;
+
+        // Validation
+        if (!employee_id || !title || !priority) {
+            return res.send("Please fill all required fields.");
+        }
+
+        // Insert Task
+        await db.query(
+            `INSERT INTO tasks
+            (
+                company_id,
+                employee_id,
+                title,
+                description,
+                priority,
+                due_date
+            )
+            VALUES (?, ?, ?, ?, ?, ?)`,
+            [
+                companyId,
+                employee_id,
+                title,
+                description,
+                priority,
+                due_date
+            ]
+        );
+
+        res.redirect("/company/create-task");
+
+    } catch (err) {
+
+        console.error(err);
+        res.status(500).send("Database Error");
+
+    }
 
 };
-
 module.exports = {
     registerPage,
     registerCompany,
