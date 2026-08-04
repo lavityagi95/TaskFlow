@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Task Details | TaskFlow</title>
+
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/taskDetails.css">
+
+</head>
+
+<body>
+
+<%- include("../partials/navbar") %>
+
+<%- include("../partials/flash") %>
+
+<div class="employee-dashboard">
+
+    <div class="content">
+
+        <div class="task-card">
+
+            <h1><%= task.title %></h1>
+
+            <p>
+
+                <strong>Description:</strong>
+
+                <%= task.description %>
+
+            </p>
+
+            <p>
+
+                <strong>Priority:</strong>
+
+                <span class="priority <%= task.priority.toLowerCase() %>">
+
+                    <%= task.priority %>
+
+                </span>
+
+            </p>
+
+            <p>
+
+                <strong>Status:</strong>
+
+                <span class="status <%= task.status.toLowerCase().replace(' ','-') %>">
+
+                    <%= task.status %>
+
+                </span>
+
+            </p>
+
+            <p>
+
+                <strong>Due Date:</strong>
+
+                <%= task.due_date
+                ? new Date(task.due_date).toLocaleDateString()
+                : "-" %>
+
+            </p>
+
+        </div>
+
+        <div class="comments-card">
+
+            <h2>Comments</h2>
+
+            <% if(comments.length === 0){ %>
+
+                <p>No comments yet.</p>
+
+            <% } else { %>
+
+                <% comments.forEach(comment => { %>
+
+                    <div class="comment">
+
+                        <h4>
+
+                            <%= comment.full_name || comment.company_name %>
+
+                        </h4>
+
+                        <p>
+
+                            <%= comment.comment %>
+
+                        </p>
+
+                        <small>
+
+                            <%= new Date(comment.created_at).toLocaleString() %>
+
+                        </small>
+
+                    </div>
+
+                <% }) %>
+
+            <% } %>
+
+            <form
+                action="/employee/task/comment/<%= task.id %>"
+                method="POST"
+                class="comment-form"
+            >
+
+                <textarea
+                    name="comment"
+                    placeholder="Write your comment..."
+                    required
+                ></textarea>
+
+                <button type="submit">
+
+                    Add Comment
+
+                </button>
+
+            </form>
+
+        </div>
+
+        <div style="margin-top:20px;">
+
+            <a
+                href="/employee/dashboard"
+                class="btn"
+            >
+
+                ← Back to Dashboard
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<%- include("../partials/footer") %>
+
+</body>
+
+</html>

@@ -1,0 +1,193 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f4f7fb;
+}
+
+.content{
+    margin-left:240px;
+    margin-top:70px;
+    padding:35px;
+}
+
+/* HEADER */
+
+.page-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+    flex-wrap:wrap;
+    gap:20px;
+}
+
+.page-header h1{
+    font-size:32px;
+    color:#1e293b;
+}
+
+.page-header form{
+    display:flex;
+    gap:10px;
+}
+
+.page-header input{
+    padding:12px;
+    width:260px;
+    border:1px solid #d1d5db;
+    border-radius:8px;
+}
+
+.page-header button{
+    padding:12px 20px;
+    border:none;
+    background:#2563eb;
+    color:#fff;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.page-header button:hover{
+    background:#1d4ed8;
+}
+
+/* TABLE */
+
+.table-container{
+    background:#fff;
+    border-radius:15px;
+    padding:25px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+thead{
+    background:#2563eb;
+    color:#fff;
+}
+
+th{
+    padding:16px;
+    text-align:left;
+}
+
+td{
+    padding:16px;
+    border-bottom:1px solid #eee;
+}
+
+tbody tr:hover{
+    background:#f8fafc;
+}
+
+/* STATUS */
+
+.status{
+    display:inline-block;
+    padding:6px 14px;
+    border-radius:20px;
+    color:#fff;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.status.approved{
+    background:#10b981;
+}
+
+.status.pending{
+    background:#f59e0b;
+}
+
+/* ACTIONS */
+
+.actions{
+    display:flex;
+    gap:10px;
+}
+
+.btn-edit{
+    text-decoration:none;
+    background:#2563eb;
+    color:#fff;
+    padding:8px 14px;
+    border-radius:8px;
+}
+
+.btn-edit:hover{
+    background:#1d4ed8;
+}
+
+.btn-delete{
+    background:#ef4444;
+    color:#fff;
+    border:none;
+    padding:8px 14px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.btn-delete:hover{
+    background:#dc2626;
+}
+
+/* EMPTY STATE */
+
+.empty-state{
+    background:#fff;
+    padding:60px;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.empty-state h2{
+    margin-bottom:10px;
+}
+
+.empty-state p{
+    color:#64748b;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:992px){
+
+    .content{
+        margin-left:0;
+        padding:20px;
+    }
+
+}
+
+@media(max-width:768px){
+
+    .page-header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .page-header form{
+        width:100%;
+        flex-direction:column;
+    }
+
+    .page-header input{
+        width:100%;
+    }
+
+    table{
+        min-width:900px;
+    }
+
+}

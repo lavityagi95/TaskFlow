@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Reports | TaskFlow</title>
+
+    <link rel="stylesheet" href="/css/adminNavbar.css">
+    <link rel="stylesheet" href="/css/adminSidebar.css">
+    <link rel="stylesheet" href="/css/reports.css">
+
+</head>
+
+<body>
+
+    <%- include("../partials/adminNavbar") %>
+
+    <div class="dashboard">
+
+        <%- include("../partials/adminSidebar") %>
+
+        <main class="content">
+
+            <div class="page-header">
+
+                <h1>Reports & Analytics</h1>
+
+                <p>Company Performance Overview</p>
+
+            </div>
+
+            <div class="cards">
+
+                <div class="card">
+                    <h3>Total Employees</h3>
+                    <h2><%= employeeCount %></h2>
+                </div>
+
+                <div class="card">
+                    <h3>Total Tasks</h3>
+                    <h2><%= taskCount %></h2>
+                </div>
+
+                <div class="card">
+                    <h3>Pending Tasks</h3>
+                    <h2><%= pending %></h2>
+                </div>
+
+                <div class="card">
+                    <h3>In Progress</h3>
+                    <h2><%= progress %></h2>
+                </div>
+
+                <div class="card">
+                    <h3>Completed</h3>
+                    <h2><%= completed %></h2>
+                </div>
+
+                <div class="card">
+                    <h3>Completion Rate</h3>
+                    <h2><%= completion %>%</h2>
+                </div>
+
+            </div>
+
+            <div class="report-grid">
+
+                <div class="report-card">
+
+                    <h2>Top Performer</h2>
+
+                    <% if(topEmployee){ %>
+
+                        <h3><%= topEmployee.full_name %></h3>
+
+                        <p>
+                            Completed Tasks :
+                            <strong><%= topEmployee.completed %></strong>
+                        </p>
+
+                    <% }else{ %>
+
+                        <p>No employee data available.</p>
+
+                    <% } %>
+
+                </div>
+
+                <div class="report-card">
+
+                    <h2>Tasks Due Today</h2>
+
+                    <h1><%= todayTasks %></h1>
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>

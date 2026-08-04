@@ -1,0 +1,314 @@
+/* ===========================
+   MANAGE TASKS PAGE
+=========================== */
+
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f4f7fb;
+    color:#1e293b;
+}
+
+.dashboard{
+    min-height:100vh;
+}
+
+.content{
+    margin-left:240px;
+    margin-top:70px;
+    padding:35px;
+}
+
+/* ===========================
+   PAGE HEADER
+=========================== */
+
+.page-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.page-header h1{
+    font-size:32px;
+    color:#1e293b;
+}
+
+.page-header a{
+    text-decoration:none;
+    background:#2563eb;
+    color:#fff;
+    padding:12px 20px;
+    border-radius:8px;
+    transition:.3s;
+}
+
+.page-header a:hover{
+    background:#1d4ed8;
+}
+
+/* ===========================
+   TABLE CONTAINER
+=========================== */
+
+.table-container{
+    background:#fff;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+    overflow-x:auto;
+}
+
+/* ===========================
+   TABLE
+=========================== */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+thead{
+    background:#2563eb;
+    color:#fff;
+}
+
+th{
+    padding:16px;
+    text-align:left;
+    font-size:15px;
+}
+
+td{
+    padding:16px;
+    border-bottom:1px solid #e5e7eb;
+}
+
+tbody tr:hover{
+    background:#f8fafc;
+}
+
+/* ===========================
+   PRIORITY BADGES
+=========================== */
+
+.priority{
+    display:inline-block;
+    padding:6px 14px;
+    border-radius:20px;
+    color:#fff;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.priority.high{
+    background:#ef4444;
+}
+
+.priority.medium{
+    background:#f59e0b;
+}
+
+.priority.low{
+    background:#10b981;
+}
+
+/* ===========================
+   STATUS BADGES
+=========================== */
+
+.status{
+    display:inline-block;
+    padding:6px 14px;
+    border-radius:20px;
+    color:#fff;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.status.pending{
+    background:#f59e0b;
+}
+
+.status.in-progress{
+    background:#3b82f6;
+}
+
+.status.completed{
+    background:#10b981;
+}
+
+/* ===========================
+   ACTION BUTTONS
+=========================== */
+
+.actions{
+    display:flex;
+    gap:10px;
+}
+
+.btn-edit{
+    text-decoration:none;
+    background:#2563eb;
+    color:#fff;
+    padding:8px 14px;
+    border-radius:8px;
+    transition:.3s;
+}
+
+.btn-edit:hover{
+    background:#1d4ed8;
+}
+
+.btn-delete{
+    background:#ef4444;
+    color:#fff;
+    border:none;
+    padding:8px 14px;
+    border-radius:8px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.btn-delete:hover{
+    background:#dc2626;
+}
+
+/* ===========================
+   EMPTY STATE
+=========================== */
+
+.empty-state{
+    text-align:center;
+    padding:60px;
+    background:#fff;
+    border-radius:15px;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+.empty-state h2{
+    margin-bottom:10px;
+}
+
+.empty-state p{
+    color:#64748b;
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+@media(max-width:992px){
+
+    .content{
+        margin-left:0;
+        padding:20px;
+    }
+
+}
+
+@media(max-width:768px){
+
+    .page-header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:15px;
+    }
+
+    table{
+        min-width:800px;
+    }
+
+}
+
+@media(max-width:576px){
+
+    .content{
+        padding:15px;
+    }
+
+}
+
+/* ===========================
+   FILTERS
+=========================== */
+
+.filter-box{
+
+    background:#fff;
+
+    padding:20px;
+
+    border-radius:12px;
+
+    margin-bottom:25px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+}
+
+.filter-box form{
+
+    display:flex;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+
+}
+
+.filter-box input,
+.filter-box select{
+
+    padding:12px;
+
+    border:1px solid #d1d5db;
+
+    border-radius:8px;
+
+    min-width:220px;
+
+    font-size:15px;
+
+}
+
+.filter-box button{
+
+    background:#2563eb;
+
+    color:#fff;
+
+    border:none;
+
+    padding:12px 22px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.filter-box button:hover{
+
+    background:#1d4ed8;
+
+}
+.btn-view{
+
+    background:#2563eb;
+    color:#fff;
+    padding:8px 14px;
+    border-radius:6px;
+    text-decoration:none;
+    font-size:14px;
+
+}
+
+.btn-view:hover{
+
+    background:#1d4ed8;
+
+}

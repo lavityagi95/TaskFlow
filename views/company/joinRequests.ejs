@@ -1,60 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
     <meta charset="UTF-8">
-    <title>Join Requests</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Join Requests | TaskFlow</title>
+
+    <link rel="stylesheet" href="/css/adminNavbar.css">
+    <link rel="stylesheet" href="/css/adminSidebar.css">
+    <link rel="stylesheet" href="/css/joinRequests.css">
 
 </head>
+
 <body>
 
-<h1>Pending Join Requests</h1>
+<%- include("../partials/adminNavbar") %>
 
-<% if(requests.length === 0){ %>
+<div class="dashboard">
 
-    <h3>No Pending Requests</h3>
+    <%- include("../partials/adminSidebar") %>
 
-<% } else { %>
+    <main class="content">
 
-    <% requests.forEach(request => { %>
+        <div class="page-header">
 
-        <div style="border:1px solid #ccc;padding:20px;margin:20px;">
+            <h1>Pending Join Requests</h1>
 
-            <h3><%= request.employee_name %></h3>
-
-            <p>Email: <%= request.email %></p>
-
-            <p>Designation: <%= request.designation %></p>
-
-            <form
-                action="/company/approve/<%= request.id %>"
-                method="POST"
-                style="display:inline;"
-            >
-
-                <button>
-                    Approve
-                </button>
-
-            </form>
-
-            <form
-                action="/company/reject/<%= request.id %>"
-                method="POST"
-                style="display:inline;"
-            >
-
-                <button>
-                    Reject
-                </button>
-
-            </form>
+            <p>Approve or reject employee requests.</p>
 
         </div>
 
-    <% }) %>
+        <% if(requests.length === 0){ %>
 
-<% } %>
+            <div class="empty-state">
+
+                <h2>No Pending Requests</h2>
+
+                <p>All join requests have been processed.</p>
+
+            </div>
+
+        <% } else { %>
+
+            <div class="request-grid">
+
+                <% requests.forEach(request => { %>
+
+                    <div class="request-card">
+
+                        <h2><%= request.employee_name %></h2>
+
+                        <p>
+
+                            <strong>Email:</strong>
+
+                            <%= request.email %>
+
+                        </p>
+
+                        <p>
+
+                            <strong>Designation:</strong>
+
+                            <%= request.designation %>
+
+                        </p>
+
+                        <div class="buttons">
+
+                            <form
+                                action="/company/approve/<%= request.id %>"
+                                method="POST">
+
+                                <button class="approve-btn">
+
+                                    Approve
+
+                                </button>
+
+                            </form>
+
+                            <form
+                                action="/company/reject/<%= request.id %>"
+                                method="POST">
+
+                                <button class="reject-btn">
+
+                                    Reject
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                <% }) %>
+
+            </div>
+
+        <% } %>
+
+    </main>
+
+</div>
 
 </body>
+
 </html>

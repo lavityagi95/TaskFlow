@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Task Details | TaskFlow</title>
+
+    <link rel="stylesheet" href="/css/adminNavbar.css">
+    <link rel="stylesheet" href="/css/adminSidebar.css">
+    <link rel="stylesheet" href="/css/taskDetails.css">
+
+</head>
+
+<body>
+
+<%- include("../partials/adminNavbar") %>
+
+<%- include("../partials/flash") %>
+
+<div class="dashboard">
+
+<%- include("../partials/adminSidebar") %>
+
+<main class="content">
+
+<div class="task-card">
+
+<h1><%= task.title %></h1>
+
+<p>
+
+<strong>Description:</strong>
+
+<%= task.description %>
+
+</p>
+
+<p>
+
+<strong>Assigned To:</strong>
+
+<%= task.full_name || "Not Assigned" %>
+
+</p>
+
+<p>
+
+<strong>Priority:</strong>
+
+<span class="priority <%= task.priority.toLowerCase() %>">
+
+<%= task.priority %>
+
+</span>
+
+</p>
+
+<p>
+
+<strong>Status:</strong>
+
+<span class="status <%= task.status.toLowerCase().replace(' ','-') %>">
+
+<%= task.status %>
+
+</span>
+
+</p>
+
+<p>
+
+<strong>Due Date:</strong>
+
+<%= task.due_date
+? new Date(task.due_date).toLocaleDateString()
+: "-" %>
+
+</p>
+
+</div>
+
+<div class="comments-card">
+
+<h2>Comments</h2>
+
+<% if(comments.length===0){ %>
+
+<p>No comments yet.</p>
+
+<% } else { %>
+
+<% comments.forEach(comment=>{ %>
+
+<div class="comment">
+
+<h4>
+
+<%= comment.full_name || comment.company_name %>
+
+</h4>
+
+<p>
+
+<%= comment.comment %>
+
+</p>
+
+<small>
+
+<%= new Date(comment.created_at).toLocaleString() %>
+
+</small>
+
+</div>
+
+<% }) %>
+
+<% } %>
+
+<form
+action="/company/task/comment/<%= task.id %>"
+method="POST"
+class="comment-form"
+>
+
+<textarea
+name="comment"
+placeholder="Write a comment..."
+required
+></textarea>
+
+<button>
+
+Add Comment
+
+</button>
+
+</form>
+
+</div>
+
+</main>
+
+</div>
+
+</body>
+
+</html>

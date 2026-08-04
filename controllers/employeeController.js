@@ -215,6 +215,114 @@ const updateTaskStatus = async (req, res) => {
     }
 
 };
+const addComment = async(req,res)=>{
+
+    const taskId=req.params.id;
+
+    const employeeId=req.session.employee.id;
+
+    const {comment}=req.body;
+
+    await db.query(
+
+        `
+        INSERT INTO task_comments
+        (task_id,employee_id,comment)
+        VALUES(?,?,?)
+        `,
+
+        [
+
+            taskId,
+
+            employeeId,
+
+            comment
+
+        ]
+
+    );
+
+    res.redirect("/employee/dashboard");
+
+};
+const taskDetailsPage = async (req,res)=>{
+
+    try{
+
+        const employeeId=req.session.employee.id;
+
+        const taskId=req.params.id;
+
+        const [task]=await db.query(
+
+            `
+            SELECT *
+            FROM tasks
+            WHERE id=?
+            AND employee_id=?
+            `,
+
+            [
+
+                taskId,
+
+                employeeId
+
+            ]
+
+        );
+
+        const [comments]=await db.query(
+
+            `
+            SELECT
+                tc.*,
+                e.full_name,
+                c.company_name
+
+            FROM task_comments tc
+
+            LEFT JOIN employees e
+            ON tc.employee_id=e.id
+
+            LEFT JOIN companies c
+            ON tc.company_id=c.id
+
+            WHERE task_id=?
+
+            ORDER BY created_at
+            `,
+
+            [taskId]
+
+        );
+
+        res.render(
+
+            "employee/taskDetails",
+
+            {
+
+                employee:req.session.employee,
+
+                task:task[0],
+
+                comments
+
+            }
+
+        );
+
+    }
+
+    catch(err){
+
+        console.log(err);
+
+    }
+
+}
 
 module.exports = {
     searchCompanyPage,
@@ -222,5 +330,9 @@ module.exports = {
     loginPage,
     loginEmployee,
     dashboardPage,
-    updateTaskStatus
+    updateTaskStatus,
+    addComment,
+    taskDetailsPage 
+    
+    
 };

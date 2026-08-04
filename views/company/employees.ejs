@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Employees | TaskFlow</title>
+
+    <link rel="stylesheet" href="/css/adminNavbar.css">
+    <link rel="stylesheet" href="/css/adminSidebar.css">
+    <link rel="stylesheet" href="/css/employees.css">
+
+</head>
+
+<body>
+
+    <%- include("../partials/adminNavbar") %>
+    <%- include("../partials/flash") %>
+
+    <div class="dashboard">
+
+        <%- include("../partials/adminSidebar") %>
+
+        <main class="content">
+
+            <div class="page-header">
+
+                <h1>Employees</h1>
+
+                <form action="/company/employees" method="GET">
+
+                    <input
+                        type="text"
+                        name="search"
+                        placeholder="Search employee..."
+                        value="<%= search || '' %>"
+                    >
+
+                    <button type="submit">
+                        Search
+                    </button>
+
+                </form>
+
+            </div>
+
+            <% if(employees.length === 0){ %>
+
+                <div class="empty-state">
+
+                    <h2>No Employees Found</h2>
+
+                    <p>No employee has joined your company yet.</p>
+
+                </div>
+
+            <% } else { %>
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Designation</th>
+                                <th>Total Tasks</th>
+                                <th>Completed</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <% employees.forEach(employee => { %>
+
+                                <tr>
+
+                                    <td>
+
+                                        <strong>
+                                            <%= employee.full_name %>
+                                        </strong>
+
+                                    </td>
+
+                                    <td>
+
+                                        <%= employee.email %>
+
+                                    </td>
+
+                                    <td>
+
+                                        <%= employee.designation %>
+
+                                    </td>
+
+                                    <td>
+
+                                        <%= employee.total_tasks || 0 %>
+
+                                    </td>
+
+                                    <td>
+
+                                        <%= employee.completed_tasks || 0 %>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span class="status approved">
+
+                                            <%= employee.status %>
+
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <div class="actions">
+
+                                            <a
+                                                href="/company/employee/edit/<%= employee.id %>"
+                                                class="btn-edit">
+
+                                                Edit
+
+                                            </a>
+
+                                            <form
+                                                action="/company/employee/delete/<%= employee.id %>"
+                                                method="POST"
+                                                onsubmit="return confirm('Delete this employee?')">
+
+                                                <button
+                                                    class="btn-delete"
+                                                    type="submit">
+
+                                                    Delete
+
+                                                </button>
+
+                                            </form>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            <% }) %>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            <% } %>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>

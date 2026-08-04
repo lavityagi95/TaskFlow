@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Notifications</title>
+
+<link rel="stylesheet" href="/css/adminNavbar.css">
+<link rel="stylesheet" href="/css/adminSidebar.css">
+<link rel="stylesheet" href="/css/notifications.css">
+
+</head>
+
+<body>
+
+<%- include("../partials/adminNavbar") %>
+
+<div class="dashboard">
+
+<%- include("../partials/adminSidebar") %>
+
+<main class="content">
+
+<h1>Notifications</h1>
+
+<% if(notifications.length===0){ %>
+
+<div class="empty">
+
+No Notifications
+
+</div>
+
+<% }else{ %>
+
+<div class="notification-list">
+
+<% notifications.forEach(notification=>{ %>
+
+<div class="notification-card <%= notification.is_read ? 'read' : 'unread' %>">
+
+<p>
+
+<%= notification.message %>
+
+</p>
+
+<small>
+
+<%= new Date(notification.created_at).toLocaleString() %>
+
+</small>
+
+</div>
+
+<% }) %>
+
+</div>
+
+<% } %>
+
+</main>
+
+</div>
+
+</body>
+
+</html>

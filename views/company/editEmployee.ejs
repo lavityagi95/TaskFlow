@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Employee | TaskFlow</title>
+
+    <link rel="stylesheet" href="/css/adminNavbar.css">
+    <link rel="stylesheet" href="/css/adminSidebar.css">
+    <link rel="stylesheet" href="/css/editEmployee.css">
+
+</head>
+
+<body>
+
+    <%- include("../partials/adminNavbar") %>
+
+    <div class="dashboard">
+
+        <%- include("../partials/adminSidebar") %>
+
+        <main class="content">
+
+            <div class="form-card">
+
+                <h1>Edit Employee</h1>
+
+                <form action="/company/employee/edit/<%= employee.id %>" method="POST">
+
+                    <div class="input-group">
+
+                        <label>Full Name</label>
+
+                        <input
+                            type="text"
+                            name="full_name"
+                            value="<%= employee.full_name %>"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="input-group">
+
+                        <label>Email</label>
+
+                        <input
+                            type="email"
+                            value="<%= employee.email %>"
+                            readonly
+                        >
+
+                    </div>
+
+                    <div class="input-group">
+
+                        <label>Designation</label>
+
+                        <input
+                            type="text"
+                            name="designation"
+                            value="<%= employee.designation %>"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="input-group">
+
+                        <label>Status</label>
+
+                        <select name="status">
+
+    <option
+        value="Pending"
+        <%= employee.status === "Pending" ? "selected" : "" %>>
+        Pending
+    </option>
+
+    <option
+        value="Approved"
+        <%= employee.status === "Approved" ? "selected" : "" %>>
+        Approved
+    </option>
+
+    <option
+        value="Blocked"
+        <%= employee.status === "Blocked" ? "selected" : "" %>>
+        Blocked
+    </option>
+
+</select>
+
+                    </div>
+
+                    <div class="buttons">
+
+                        <button class="save-btn">
+                            Save Changes
+                        </button>
+
+                        <a
+                            href="/company/employees"
+                            class="cancel-btn">
+
+                            Cancel
+
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>
