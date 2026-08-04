@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Task | TaskFlow</title>
+
+    <title>Edit Task</title>
 
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/navbar.css">
     <link rel="stylesheet" href="/css/footer.css">
     <link rel="stylesheet" href="/css/task.css">
-    <link rel="stylesheet" href="/css/task.css">
+
 </head>
+
 <body>
 
 <%- include("../partials/navbar") %>
@@ -19,41 +23,46 @@
 
     <div class="task-card">
 
-        <h1>Create Task</h1>
+        <h1>Edit Task</h1>
 
-        <form action="/company/create-task" method="POST">
+        <form action="/company/task/edit/<%= task.id %>" method="POST">
 
             <div class="form-group">
-                <label>Task Title</label>
+
+                <label>Title</label>
+
                 <input
                     type="text"
                     name="title"
-                    placeholder="Enter task title"
-                    required
-                >
+                    value="<%= task.title %>"
+                    required>
+
             </div>
 
             <div class="form-group">
+
                 <label>Description</label>
 
                 <textarea
                     name="description"
-                    rows="5"
-                    placeholder="Task description"
-                ></textarea>
+                    rows="5"><%= task.description %></textarea>
+
             </div>
 
             <div class="form-group">
-                <label>Assign Employee</label>
 
-                <select name="employee_id" required>
+                <label>Employee</label>
 
-                    <option value="">Select Employee</option>
+                <select name="employee_id">
 
                     <% employees.forEach(employee => { %>
 
-                        <option value="<%= employee.id %>">
+                        <option
+                            value="<%= employee.id %>"
+                            <%= employee.id === task.employee_id ? "selected" : "" %>>
+
                             <%= employee.full_name %>
+
                         </option>
 
                     <% }) %>
@@ -68,9 +77,11 @@
 
                 <select name="priority">
 
-                    <option>Low</option>
-                    <option selected>Medium</option>
-                    <option>High</option>
+                    <option value="Low" <%= task.priority === "Low" ? "selected" : "" %>>Low</option>
+
+                    <option value="Medium" <%= task.priority === "Medium" ? "selected" : "" %>>Medium</option>
+
+                    <option value="High" <%= task.priority === "High" ? "selected" : "" %>>High</option>
 
                 </select>
 
@@ -83,12 +94,14 @@
                 <input
                     type="date"
                     name="due_date"
-                >
+                    value="<%= task.due_date ? task.due_date.toISOString().split('T')[0] : '' %>">
 
             </div>
 
             <button class="btn">
-                Create Task
+
+                Update Task
+
             </button>
 
         </form>
@@ -97,7 +110,6 @@
 
 </section>
 
-<%- include("../partials/footer") %>
-
 </body>
+
 </html>

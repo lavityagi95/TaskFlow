@@ -3,52 +3,146 @@
 
 <head>
 
-    <title>Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard | TaskFlow</title>
 
     <link rel="stylesheet" href="/css/adminNavbar.css">
     <link rel="stylesheet" href="/css/adminSidebar.css">
-    <link rel="stylesheet" href="/css/dashboard.css">
+    <link rel="stylesheet" href="/css/adminDashboard.css">
 
 </head>
 
 <body>
 
-<%- include("../partials/adminNavbar") %>
+    <%- include("../partials/adminNavbar") %>
+    <%- include("../partials/flash") %>
 
-<div class="dashboard">
+    <div class="dashboard">
 
-    <%- include("../partials/adminSidebar") %>
+        <%- include("../partials/adminSidebar") %>
 
-    <main class="content">
+        <main class="content">
 
-        <h1>
-            Welcome,
-            <%= company.company_name %>
-        </h1>
+            <div class="page-header">
 
-        <div class="cards">
+                <div>
+                    <h1>Welcome, <%= company.company_name %></h1>
+                    <p>Manage your employees and tasks efficiently.</p>
+                </div>
 
-            <div class="card">
-                Total Employees
             </div>
 
-            <div class="card">
-                Pending Requests
+            <div class="cards">
+
+                <div class="card">
+
+                    <h3>Total Employees</h3>
+
+                    <h2><%= totalEmployees %></h2>
+
+                </div>
+
+                <div class="card">
+
+                    <h3>Pending Tasks</h3>
+
+                    <h2><%= pendingTasks %></h2>
+
+                </div>
+
+                <div class="card">
+
+                    <h3>In Progress</h3>
+
+                    <h2><%= progressTasks %></h2>
+
+                </div>
+
+                <div class="card">
+
+                    <h3>Completed</h3>
+
+                    <h2><%= completedTasks %></h2>
+
+                </div>
+
             </div>
 
-            <div class="card">
-                Total Tasks
+            <div class="table-container">
+
+                <h2>Recent Tasks</h2>
+
+                <% if(tasks.length === 0){ %>
+
+                    <p>No tasks created yet.</p>
+
+                <% } else { %>
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Title</th>
+                                <th>Employee</th>
+                                <th>Priority</th>
+                                <th>Status</th>
+                                <th>Due Date</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <% tasks.forEach(task => { %>
+
+                                <tr>
+
+                                    <td><%= task.title %></td>
+
+                                    <td><%= task.full_name %></td>
+
+                                    <td>
+    <span class="priority <%= task.priority.toLowerCase() %>">
+        <%= task.priority %>
+    </span>
+</td>
+
+                                    <td>
+
+                                        <span class="status <%= task.status.toLowerCase().replace(' ','-') %>">
+
+                                            <%= task.status %>
+
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <%= task.due_date ? new Date(task.due_date).toLocaleDateString() : "-" %>
+
+                                    </td>
+
+                                </tr>
+
+                            <% }) %>
+
+                        </tbody>
+
+                    </table>
+
+                <% } %>
+
             </div>
 
-            <div class="card">
-                Completed Tasks
-            </div>
+        </main>
 
-        </div>
-
-    </main>
-
-</div>
+    </div>
 
 </body>
 

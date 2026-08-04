@@ -40,7 +40,9 @@ const registerCompany = async (req, res) => {
     console.log("Company Registered Successfully");
     console.log("Company ID:", result.insertId);
 
-    res.send("Company Registered Successfully");
+    req.flash("success", "Company registered successfully. Please login.");
+
+res.redirect("/company/login");
   } catch (err) {
     console.error(err);
     res.status(500).send("Database Error");
@@ -64,7 +66,9 @@ const loginCompany = async (req, res) => {
     console.log(rows);
 
     if (rows.length === 0) {
-      return res.send("Invalid Email");
+      req.flash("error", "Invalid Email");
+
+return res.redirect("/company/login");
     }
 
     const company = rows[0];
@@ -74,7 +78,9 @@ const loginCompany = async (req, res) => {
     console.log("Password Match:", isMatch);
 
     if (!isMatch) {
-      return res.send("Invalid Password");
+      req.flash("error", "Invalid Password");
+
+return res.redirect("/company/login");
     }
 
     req.session.company = {
@@ -98,11 +104,82 @@ const loginCompany = async (req, res) => {
   }
 };
 
-const dashboardPage = (req, res) => {
+const dashboardPage = async (req, res) => {
 
-    res.render("company/dashboard", {
-        company: req.session.company
-    });
+    try {
+
+        const companyId = req.session.company.id;
+
+        // Total Employees
+        const [employees] = await db.query(
+            "SELECT COUNT(*) AS total FROM employees WHERE company_id = ?",
+            [companyId]
+        );
+
+        // Pending Tasks
+        const [pending] = await db.query(
+            `SELECT COUNT(*) AS total
+             FROM tasks
+             WHERE company_id = ?
+             AND status = 'Pending'`,
+            [companyId]
+        );
+
+        // In Progress Tasks
+        const [progress] = await db.query(
+            `SELECT COUNT(*) AS total
+             FROM tasks
+             WHERE company_id = ?
+             AND status = 'In Progress'`,
+            [companyId]
+        );
+
+        // Completed Tasks
+        const [completed] = await db.query(
+            `SELECT COUNT(*) AS total
+             FROM tasks
+             WHERE company_id = ?
+             AND status = 'Completed'`,
+            [companyId]
+        );
+
+        // Recent Tasks
+        const [tasks] = await db.query(
+            `SELECT
+                tasks.*,
+                employees.full_name
+             FROM tasks
+             JOIN employees
+             ON tasks.employee_id = employees.id
+             WHERE tasks.company_id = ?
+             ORDER BY tasks.created_at DESC
+             LIMIT 10`,
+            [companyId]
+        );
+
+        res.render("company/dashboard", {
+
+            company: req.session.company,
+
+            totalEmployees: employees[0].total,
+
+            pendingTasks: pending[0].total,
+
+            progressTasks: progress[0].total,
+
+            completedTasks: completed[0].total,
+
+            tasks
+
+        });
+
+    } catch (err) {
+
+        console.error(err);
+
+        res.status(500).send("Database Error");
+
+    }
 
 };
 
@@ -282,7 +359,9 @@ const createTask = async (req, res) => {
             ]
         );
 
-        res.redirect("/company/create-task");
+       req.flash("success", "Task created successfully.");
+
+res.redirect("/company/tasks");
 
     } catch (err) {
 
@@ -292,6 +371,208 @@ const createTask = async (req, res) => {
     }
 
 };
+const tasksPage = async (req, res) => {
+
+    try {
+
+        const companyId = req.session.company.id;
+
+        const search = req.query.search || "";
+        const status = req.query.status || "";
+
+        let sql = `
+            SELECT
+                tasks.id,
+                tasks.title,
+                tasks.priority,
+                tasks.status,
+                tasks.due_date,
+                employees.full_name
+            FROM tasks
+            JOIN employees
+                ON tasks.employee_id = employees.id
+            WHERE tasks.company_id = ?
+        `;
+
+        const values = [companyId];
+
+        if (search) {
+
+            sql += " AND tasks.title LIKE ?";
+
+            values.push(`%${search}%`);
+
+        }
+
+        if (status) {
+
+            sql += " AND tasks.status = ?";
+
+            values.push(status);
+
+        }
+
+        sql += " ORDER BY tasks.created_at DESC";
+
+        const [tasks] = await db.query(sql, values);
+
+        res.render("company/tasks", {
+
+            company: req.session.company,
+
+            tasks,
+
+            search,
+
+            status
+
+        });
+
+    } catch (err) {
+
+        console.error(err);
+
+        res.status(500).send("Database Error");
+
+    }
+
+};
+
+const editTaskPage = async (req, res) => {
+
+    try {
+
+        const companyId = req.session.company.id;
+        const taskId = req.params.id;
+
+        // Get Task
+        const [tasks] = await db.query(
+            `SELECT *
+             FROM tasks
+             WHERE id = ?
+             AND company_id = ?`,
+            [taskId, companyId]
+        );
+
+        if (tasks.length === 0) {
+            return res.send("Task not found.");
+        }
+
+        // Get Employees
+        const [employees] = await db.query(
+            `SELECT id, full_name
+             FROM employees
+             WHERE company_id = ?
+             ORDER BY full_name`,
+            [companyId]
+        );
+
+        res.render("company/editTask", {
+            task: tasks[0],
+            employees
+        });
+
+    } catch (err) {
+
+        console.error(err);
+        res.status(500).send("Database Error");
+
+    }
+
+};
+
+const updateTask = async (req, res) => {
+
+    try {
+
+        const companyId = req.session.company.id;
+        const taskId = req.params.id;
+
+        const {
+            title,
+            description,
+            employee_id,
+            priority,
+            due_date
+        } = req.body;
+
+        // Validation
+        if (!title || !employee_id || !priority) {
+            return res.send("Please fill all required fields.");
+        }
+
+        // Update task
+        const [result] = await db.query(
+            `UPDATE tasks
+             SET
+                title = ?,
+                description = ?,
+                employee_id = ?,
+                priority = ?,
+                due_date = ?
+             WHERE id = ?
+             AND company_id = ?`,
+            [
+                title,
+                description,
+                employee_id,
+                priority,
+                due_date,
+                taskId,
+                companyId
+            ]
+        );
+
+        if (result.affectedRows === 0) {
+            return res.send("Task not found or access denied.");
+        }
+
+        req.flash("success", "Task updated successfully.");
+
+res.redirect("/company/tasks");
+
+    } catch (err) {
+
+        console.error(err);
+        res.status(500).send("Database Error");
+
+    }
+
+};
+const deleteTask = async (req, res) => {
+
+    try {
+
+        const companyId = req.session.company.id;
+        const taskId = req.params.id;
+
+        const [result] = await db.query(
+            `DELETE FROM tasks
+             WHERE id = ?
+             AND company_id = ?`,
+            [
+                taskId,
+                companyId
+            ]
+        );
+
+        if (result.affectedRows === 0) {
+            return res.send("Task not found or access denied.");
+        }
+
+        req.flash("success", "Task deleted successfully.");
+
+res.redirect("/company/tasks");
+
+    } catch (err) {
+
+        console.error(err);
+        res.status(500).send("Database Error");
+
+    }
+
+};
+
 module.exports = {
     registerPage,
     registerCompany,
@@ -302,5 +583,9 @@ module.exports = {
     approveEmployee,
     rejectEmployee,
     createTaskPage,
-    createTask
+    createTask,
+    tasksPage,
+    editTaskPage,
+    updateTask,
+    deleteTask
 };

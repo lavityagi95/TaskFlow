@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Tasks | TaskFlow</title>
+
+    <link rel="stylesheet" href="/css/adminNavbar.css">
+    <link rel="stylesheet" href="/css/adminSidebar.css">
+    <link rel="stylesheet" href="/css/tasks.css">
+
+</head>
+
+<body>
+
+    <%- include("../partials/adminNavbar") %>
+
+    <div class="dashboard">
+
+        <%- include("../partials/adminSidebar") %>
+
+        <main class="content">
+
+            <div class="page-header">
+
+                <h1>Manage Tasks</h1>
+
+                <a href="/company/create-task" class="btn">
+                    + Create Task
+                </a>
+
+            </div>
+
+            <% if(tasks.length === 0){ %>
+
+                <p>No tasks found.</p>
+
+            <% } else { %>
+                <form
+    action="/company/tasks"
+    method="GET"
+    class="search-form"
+>
+
+    <input
+        type="text"
+        name="search"
+        placeholder="Search task..."
+        value="<%= search %>"
+    >
+
+    <select name="status">
+
+        <option value="">All Status</option>
+
+        <option
+            value="Pending"
+            <%= status==="Pending" ? "selected" : "" %>>
+            Pending
+        </option>
+
+        <option
+            value="In Progress"
+            <%= status==="In Progress" ? "selected" : "" %>>
+            In Progress
+        </option>
+
+        <option
+            value="Completed"
+            <%= status==="Completed" ? "selected" : "" %>>
+            Completed
+        </option>
+
+    </select>
+
+    <button class="btn">
+
+        Search
+
+    </button>
+
+</form>
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Title</th>
+                            <th>Employee</th>
+                            <th>Priority</th>
+                            <th>Status</th>
+                            <th>Due Date</th>
+                            <th>Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <% tasks.forEach(task => { %>
+
+                            <tr>
+
+                                <td><%= task.title %></td>
+
+                                <td><%= task.full_name %></td>
+
+                                <td><%= task.priority %></td>
+
+                                <td><%= task.status %></td>
+
+                                <td>
+                                    <%= task.due_date ? new Date(task.due_date).toLocaleDateString() : "-" %>
+                                </td>
+
+                                <td>
+
+                                    <a
+                                        href="/company/task/edit/<%= task.id %>"
+                                        class="edit-btn">
+                                        Edit
+                                    </a>
+
+                                   <form
+    action="/company/task/delete/<%= task.id %>"
+    method="POST"
+    style="display:inline;"
+>
+
+    <button
+        type="submit"
+        class="delete-btn"
+        onclick="return confirm('Are you sure you want to delete this task?')"
+    >
+        Delete
+    </button>
+
+</form>
+
+                                </td>
+
+                            </tr>
+
+                        <% }) %>
+
+                    </tbody>
+
+                </table>
+
+            <% } %>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>

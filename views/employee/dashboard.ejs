@@ -1,13 +1,137 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Employee Dashboard</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Employee Dashboard | TaskFlow</title>
+
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+
 </head>
+
 <body>
 
-<h1>Welcome <%= employee.full_name %></h1>
+<%- include("../partials/navbar") %>
+<%- include("../partials/flash") %>
 
-<p>You have successfully logged in.</p>
+<section class="employee-dashboard">
+
+    <div class="dashboard-header">
+
+        <h1>Welcome, <%= employee.full_name %> 👋</h1>
+
+        <p>Manage your assigned tasks efficiently.</p>
+
+    </div>
+
+    <% if(tasks.length === 0){ %>
+
+        <div class="empty-state">
+
+            <h2>No Tasks Assigned</h2>
+
+            <p>Your assigned tasks will appear here.</p>
+
+        </div>
+
+    <% } else { %>
+
+        <div class="task-grid">
+
+            <% tasks.forEach(task => { %>
+
+                <div class="task-card">
+
+                    <div class="task-top">
+
+                        <h2><%= task.title %></h2>
+
+                        <span class="priority <%= task.priority.toLowerCase() %>">
+
+                            <%= task.priority %>
+
+                        </span>
+
+                    </div>
+
+                    <p class="description">
+
+                        <%= task.description %>
+
+                    </p>
+
+                    <div class="task-info">
+
+                        <p>
+
+                            <strong>Status</strong><br>
+
+                            <span class="status <%= task.status.toLowerCase().replace(' ','-') %>">
+
+                                <%= task.status %>
+
+                            </span>
+
+                        </p>
+
+                        <p>
+
+                            <strong>Due Date</strong><br>
+
+                            <%= task.due_date ? new Date(task.due_date).toLocaleDateString() : "No Due Date" %>
+
+                        </p>
+
+                    </div>
+
+                    <form
+                        action="/employee/task/update/<%= task.id %>"
+                        method="POST"
+                        class="status-form"
+                    >
+
+                        <select name="status">
+
+                            <option value="Pending" <%= task.status==="Pending" ? "selected" : "" %>>
+                                Pending
+                            </option>
+
+                            <option value="In Progress" <%= task.status==="In Progress" ? "selected" : "" %>>
+                                In Progress
+                            </option>
+
+                            <option value="Completed" <%= task.status==="Completed" ? "selected" : "" %>>
+                                Completed
+                            </option>
+
+                        </select>
+
+                        <button type="submit" class="btn">
+
+                            Update Status
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            <% }) %>
+
+        </div>
+
+    <% } %>
+
+</section>
+
+<%- include("../partials/footer") %>
 
 </body>
+
 </html>

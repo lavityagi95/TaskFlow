@@ -19,6 +19,12 @@ router.get("/create-task", isLoggedIn, companyController.createTaskPage);
 
 router.post("/create-task", isLoggedIn, companyController.createTask);
 
+router.get("/tasks", isLoggedIn, companyController.tasksPage);
 
+router.get("/task/edit/:id", isLoggedIn, companyController.editTaskPage);
+
+router.post("/task/edit/:id", isLoggedIn, companyController.updateTask);
+
+router.post("/task/delete/:id", isLoggedIn, companyController.deleteTask);
 
 module.exports = router;

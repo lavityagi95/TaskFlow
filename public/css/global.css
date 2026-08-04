@@ -28,3 +28,26 @@ img{
     max-width:1200px;
     margin:auto;
 }
+.success-message {
+    width: 90%;
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 15px 20px;
+    background: #d1fae5;
+    color: #065f46;
+    border: 1px solid #10b981;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.error-message {
+    width: 90%;
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 15px 20px;
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #ef4444;
+    border-radius: 8px;
+    font-weight: 600;
+}

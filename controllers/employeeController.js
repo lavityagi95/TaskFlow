@@ -119,7 +119,9 @@ const loginEmployee = async (req, res) => {
         );
 
         if (employees.length === 0) {
-            return res.send("Invalid Email");
+            req.flash("error", "Invalid Email");
+
+return res.redirect("/employee/login");
         }
 
         const employee = employees[0];
@@ -130,7 +132,9 @@ const loginEmployee = async (req, res) => {
         );
 
         if (!isMatch) {
-            return res.send("Invalid Password");
+           req.flash("error", "Invalid Password");
+
+return res.redirect("/employee/login");
         }
 
         req.session.employee = {
@@ -139,6 +143,67 @@ const loginEmployee = async (req, res) => {
             full_name: employee.full_name,
             email: employee.email
         };
+
+        req.flash("success", "Welcome back!");
+
+res.redirect("/employee/dashboard");
+
+    } catch (err) {
+
+        console.error(err);
+        res.status(500).send("Database Error");
+
+    }
+
+};
+
+const dashboardPage = async (req, res) => {
+
+    try {
+
+        const employeeId = req.session.employee.id;
+
+        const [tasks] = await db.query(
+            `SELECT *
+             FROM tasks
+             WHERE employee_id = ?
+             ORDER BY created_at DESC`,
+            [employeeId]
+        );
+
+        res.render("employee/dashboard", {
+            employee: req.session.employee,
+            tasks
+        });
+
+    } catch (err) {
+
+        console.error(err);
+        res.status(500).send("Database Error");
+
+    }
+
+};
+const updateTaskStatus = async (req, res) => {
+
+    try {
+
+        const taskId = req.params.id;
+        const employeeId = req.session.employee.id;
+        const { status } = req.body;
+
+        // Only update tasks assigned to the logged-in employee
+        await db.query(
+            `UPDATE tasks
+             SET status = ?
+             WHERE id = ?
+             AND employee_id = ?`,
+            [
+                status,
+                taskId,
+                employeeId
+            ]
+        );
 
         res.redirect("/employee/dashboard");
 
@@ -151,18 +216,11 @@ const loginEmployee = async (req, res) => {
 
 };
 
-const dashboardPage = (req, res) => {
-
-    res.render("employee/dashboard", {
-        employee: req.session.employee
-    });
-
-};
-
 module.exports = {
     searchCompanyPage,
     sendJoinRequest,
     loginPage,
     loginEmployee,
-    dashboardPage
+    dashboardPage,
+    updateTaskStatus
 };

@@ -18,4 +18,9 @@ router.get("/login", employeeController.loginPage);
 router.post("/login", employeeController.loginEmployee);
 
 router.get("/dashboard", isEmployeeLoggedIn, employeeController.dashboardPage);
+router.post(
+  "/task/update/:id",
+  isEmployeeLoggedIn,
+  employeeController.updateTaskStatus,
+);
 module.exports = router;
